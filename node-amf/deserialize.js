@@ -221,10 +221,17 @@ AMFDeserializer.prototype.readValue = function( version ){
 			return this.readDate();	
 		case amf.AMF0_OBJECT:
 			return this.readObject( amf.AMF0 );			
+		case amf.AMF0_ECMA_ARRAY:
+			return this.readECMAArray();
 		default:
 			throw new Error('Type error, unsupported AMF0 marker: 0x' +utils.leftPad(marker.toString(16),2,'0')+ ', offset '+this.i);
 		}
 	}
+}
+
+AMFDeserializer.prototype.readECMAArray = function(){
+	this.readU32();
+	return this.readObject( amf.AMF0 );
 }
 
 
